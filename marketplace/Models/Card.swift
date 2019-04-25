@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+
+struct Card {
+    var image: String
+    var price: Double
+    var itemName: String
+    var sellerName: String
+}

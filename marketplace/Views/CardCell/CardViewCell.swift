@@ -8,8 +8,12 @@
 
 import UIKit
 
-class CardViewCell: UICollectionViewCell {
+class CardViewCell: UICollectionViewCell, CellInterface {
 
+    @IBOutlet weak var cardLabel: UILabel!
+    @IBOutlet weak var cardImage: UIImageView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
