@@ -14,4 +14,6 @@ protocol CardsListViewInput: class {
     */
 
     func setupInitialState()
+    
+    func reloadCollectionView ()
 }

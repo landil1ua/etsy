@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardsListViewController: UIViewController, CardsListViewInput {
+class CardsListViewController: UIViewController {
 
     var output: CardsListViewOutput!
     
@@ -18,19 +18,29 @@ class CardsListViewController: UIViewController, CardsListViewInput {
     override func viewDidLoad() {
         super.viewDidLoad()
         //output.viewIsReady()
-        
+        self.output.viewIsReady()
         registerCell()
     }
 
-
-    // MARK: CardsListViewInput
-    func setupInitialState() {
-    }
-    
     func registerCell() {
         self.cardsListCollectionView.register(CardViewCell.cellNib, forCellWithReuseIdentifier: CardViewCell.id)
     }
 }
+
+extension CardsListViewController : CardsListViewInput {
+    // MARK: CardsListViewInput
+    func setupInitialState() {
+    
+    }
+    
+    func reloadCollectionView() {
+        DispatchQueue.main.async {
+            self.cardsListCollectionView.reloadData()
+        }
+    }
+    
+}
+
 
 
 // MARK: CollectionViewDataSource
@@ -41,7 +51,8 @@ extension CardsListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+//        self.output.categoryList.count
+        return  100
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
