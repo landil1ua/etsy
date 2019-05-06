@@ -7,10 +7,10 @@
 //
 
 import Foundation
-
+import UIKit
 
 protocol APIService {
     
-    func getCards()
+    func getCards(completionHandler: @escaping ([Card])->())
     
 }

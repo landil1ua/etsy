@@ -11,10 +11,25 @@ class CardsListPresenter: CardsListModuleInput, CardsListViewOutput, CardsListIn
     weak var view: CardsListViewInput!
     var interactor: CardsListInteractorInput!
     var router: CardsListRouterInput!
+    
+    fileprivate var _cardsList: [Any] = []
 
     func viewIsReady() {
 
     }
-    
-    
+}
+
+
+extension CardsListPresenter {
+    var cardsList : [Any] {
+        return _cardsList
+    }
+}
+
+
+// API Methods
+extension CardsListPresenter {
+    func loadCards() {
+        
+    }
 }

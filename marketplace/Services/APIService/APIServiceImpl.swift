@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class APIServiceImpl {
     
@@ -26,16 +27,19 @@ class APIServiceImpl {
 }
 
 extension APIServiceImpl: APIService {
+
     
-    func getCards() {
+    func getCards(completionHandler: @escaping ([Card])->()) {
+        
         dataTask?.cancel()
         
-        
+        // create full URL with keys
         if var urlComponents = URLComponents(string: settings.baseEndpoint) {
             urlComponents.query = "api_key=\(settings.apiKey)&includes=MainImage"
             
             guard let url = urlComponents.url else { return }
             
+            // create new data task with full URL
             dataTask = urlSession.dataTask(with: url) {
                 data, response, error in
                 if let error = error {
@@ -43,11 +47,12 @@ extension APIServiceImpl: APIService {
                     return
                 } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
                     do {
+                        // Parse JSON response
                         let cards = try JSONDecoder().decode(Response.self, from: data)
-                        cards.results.forEach({ (card) in
-                            print("\(card.title!)\n\(card.price!) \(card.currency_code!)\n\(card.MainImage.url_fullxfull!)")
-                            print("---------------")
-                        })
+                        
+                        // reload data with completion
+                        completionHandler(cards.results)
+                        
                         
                     } catch {
                         print(error)
@@ -62,5 +67,6 @@ extension APIServiceImpl: APIService {
         }
         
         dataTask?.resume()
+        
     }
 }
