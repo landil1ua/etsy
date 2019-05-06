@@ -11,6 +11,9 @@ import UIKit
 class CardsListViewController: UIViewController, CardsListViewInput {
 
     var output: CardsListViewOutput!
+    var api = APIServiceImpl()
+    
+    var cardsList: [Card]?
     
     @IBOutlet weak var cardsListCollectionView: UICollectionView!
     
@@ -20,6 +23,9 @@ class CardsListViewController: UIViewController, CardsListViewInput {
         //output.viewIsReady()
         
         registerCell()
+        
+        api.getCards()
+                
     }
 
 
@@ -30,6 +36,11 @@ class CardsListViewController: UIViewController, CardsListViewInput {
     func registerCell() {
         self.cardsListCollectionView.register(CardViewCell.cellNib, forCellWithReuseIdentifier: CardViewCell.id)
     }
+    
+    
+    
+    
+    
 }
 
 
