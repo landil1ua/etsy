@@ -7,11 +7,14 @@
 //
 
 protocol CardsListViewOutput {
-
+    
     /**
-        @author landil
-        Notify presenter that view is ready
-    */
-
+     @author landil
+     Notify presenter that view is ready
+     */
+    
+    var categoryList : [Any] { get }
+    
     func viewIsReady()
+    
 }

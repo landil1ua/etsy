@@ -8,13 +8,14 @@
 
 import Foundation
 
+// Исправить названия, создать отдельные классы
 
-struct Response: Codable {
+struct Response: Codable { // Base response
     let count: Int?
     let results: [Card]
 }
 
-struct Card: Codable {
+struct Card: Codable { // Card
     let title: String?
     let price: String?
     let currency_code: String?
@@ -22,6 +23,6 @@ struct Card: Codable {
     var MainImage: Image 
 }
 
-struct Image: Codable {
+struct Image: Codable { // CardImage with several images (not one)
     let url_fullxfull: String?
 }

@@ -20,6 +20,9 @@ class AppSettingsImpl {
 
 extension AppSettingsImpl : AppSettings {
     
+    //Добавить Info.plist
+    //Изменить базовый урл
+    
     var baseEndpoint: String {
         return "https://openapi.etsy.com/v2/listings/active"
     }

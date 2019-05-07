@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gKV-pv-vwD">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Cards List View Controller-->
+        <scene sceneID="DmH-vn-yk2">
+            <objects>
+                <viewController id="gKV-pv-vwD" customClass="CardsListViewController" customModule="marketplace" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AjG-9N-ZH2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="dj3-fd-sPn">
+                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ItX-qg-A1P">
+                                <rect key="frame" x="0.0" y="100" width="414" height="796"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="U16-If-5cZ">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="gKV-pv-vwD" id="H8M-cE-cLA"/>
+                                    <outlet property="delegate" destination="gKV-pv-vwD" id="AnB-XB-QHo"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ItX-qg-A1P" firstAttribute="top" secondItem="dj3-fd-sPn" secondAttribute="bottom" id="UnI-22-r84"/>
+                            <constraint firstItem="dj3-fd-sPn" firstAttribute="centerX" secondItem="yPm-1z-3RY" secondAttribute="centerX" id="XJH-Wr-gw4"/>
+                            <constraint firstAttribute="bottom" secondItem="ItX-qg-A1P" secondAttribute="bottom" id="XWS-fK-g9K"/>
+                            <constraint firstItem="ItX-qg-A1P" firstAttribute="trailing" secondItem="yPm-1z-3RY" secondAttribute="trailing" id="aeZ-wg-mCk"/>
+                            <constraint firstItem="ItX-qg-A1P" firstAttribute="leading" secondItem="yPm-1z-3RY" secondAttribute="leading" id="sbe-ii-Ety"/>
+                            <constraint firstItem="dj3-fd-sPn" firstAttribute="width" secondItem="AjG-9N-ZH2" secondAttribute="width" id="wZK-bc-oCt"/>
+                            <constraint firstItem="dj3-fd-sPn" firstAttribute="top" secondItem="yPm-1z-3RY" secondAttribute="top" id="xic-Tz-db7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yPm-1z-3RY"/>
+                    </view>
+                    <connections>
+                        <outlet property="cardsListCollectionView" destination="ItX-qg-A1P" id="t5w-u4-GiV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0bP-Xn-L9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="231.8840579710145" y="148.66071428571428"/>
+        </scene>
+    </scenes>
+</document>

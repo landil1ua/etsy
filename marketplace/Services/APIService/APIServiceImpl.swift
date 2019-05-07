@@ -27,10 +27,10 @@ class APIServiceImpl {
 }
 
 extension APIServiceImpl: APIService {
-
+    
     
     func getCards(completionHandler: @escaping ([Card])->()) {
-        
+        //Узнать что выполняется в каждом методе, который был вызван ниже
         dataTask?.cancel()
         
         // create full URL with keys
@@ -40,8 +40,7 @@ extension APIServiceImpl: APIService {
             guard let url = urlComponents.url else { return }
             
             // create new data task with full URL
-            dataTask = urlSession.dataTask(with: url) {
-                data, response, error in
+            dataTask = urlSession.dataTask(with: url) { data, response, error in
                 if let error = error {
                     print(error.localizedDescription)
                     return
@@ -52,15 +51,10 @@ extension APIServiceImpl: APIService {
                         
                         // reload data with completion
                         completionHandler(cards.results)
-                        
-                        
                     } catch {
                         print(error)
                         return
                     }
-                    
-                    
-                    
                 }
                 
             }

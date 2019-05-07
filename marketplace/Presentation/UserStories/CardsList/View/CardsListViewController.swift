@@ -8,10 +8,11 @@
 
 import UIKit
 
-class CardsListViewController: UIViewController, CardsListViewInput {
-
+class CardsListViewController: UIViewController {
+    
+    
     var output: CardsListViewOutput!
-    var api = APIServiceImpl()
+    //    var api = APIServiceImpl()
     
     var cardsList: [Card]?
     
@@ -20,32 +21,50 @@ class CardsListViewController: UIViewController, CardsListViewInput {
     // MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //output.viewIsReady()
         
-        registerCell()
+        output = CardsListPresenter()
+        output.viewIsReady()
+        self.setupViewController()
         
-        api.getCards(completionHandler: updateCards(cards:))
-                
-    }
-
-
-    // MARK: CardsListViewInput
-    func setupInitialState() {
+        //        api.getCards(completionHandler: updateCards(cards:))
     }
     
-    func registerCell() {
+    
+    // MARK: CardsListViewInput
+    func setupInitialState() {
+        
+    }
+    
+    
+    //    func updateCards(cards: [Card]) {
+    //        self.cardsList = cards
+    //        DispatchQueue.main.async {
+    //            self.cardsListCollectionView.reloadData()
+    //        }
+    //    }
+}
+
+
+extension CardsListViewController : CardsListViewInput {
+    
+    func reloadCollectionView() {
+        
+    }
+    
+}
+
+
+fileprivate extension CardsListViewController {
+    
+    func setupViewController () {
+        self.setupCollectionView()
+    }
+    
+    func setupCollectionView () {
         self.cardsListCollectionView.register(CardViewCell.cellNib, forCellWithReuseIdentifier: CardViewCell.id)
     }
     
-    
-    func updateCards(cards: [Card]) {
-        self.cardsList = cards
-        DispatchQueue.main.async {
-            self.cardsListCollectionView.reloadData()
-        }
-    }
 }
-
 
 // MARK: CollectionViewDataSource
 extension CardsListViewController: UICollectionViewDataSource {
@@ -63,16 +82,12 @@ extension CardsListViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.id, for: indexPath) as? CardViewCell {
-            if let cardsList = self.cardsList, let title = cardsList[indexPath.row].title, let imageURL = cardsList[indexPath.row].MainImage.url_fullxfull {
-                cell.cardLabel.text = title
-                cell.cardImage.loadImageFromURL(imageURL: imageURL)
-
-            }
+            cell.configure (with : nil)
             return cell
         }
         return UICollectionViewCell()
     }
-
+    
 }
 
 extension CardsListViewController: UICollectionViewDelegateFlowLayout {
@@ -81,15 +96,16 @@ extension CardsListViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+
+
+
 // extension for loading image from URL in async
 extension UIImageView {
+    
     func loadImageFromURL(imageURL: String) {
         image = nil
-        
         let queue = OperationQueue()
-        
         guard let url = URL(string: imageURL) else { return }
-        
         queue.addOperation {
             do {
                 let data = try Data(contentsOf: url)
@@ -100,7 +116,5 @@ extension UIImageView {
                 return
             }
         }
-        
-        
     }
 }

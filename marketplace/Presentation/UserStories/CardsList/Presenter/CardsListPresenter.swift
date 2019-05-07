@@ -7,15 +7,18 @@
 //
 
 class CardsListPresenter: CardsListModuleInput, CardsListViewOutput, CardsListInteractorOutput {
-
+    
+    
     weak var view: CardsListViewInput!
     var interactor: CardsListInteractorInput!
     var router: CardsListRouterInput!
     
     fileprivate var _cardsList: [Any] = []
-
+    
+    var categoryList: [Any] = []
+    
     func viewIsReady() {
-
+        
     }
 }
 
@@ -29,7 +32,9 @@ extension CardsListPresenter {
 
 // API Methods
 extension CardsListPresenter {
+    
     func loadCards() {
         
     }
+    
 }

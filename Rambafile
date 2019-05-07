@@ -10,7 +10,7 @@ xcodeproj_path: marketplace.xcodeproj
 project_target: marketplace
 
 # The file path for new modules
-project_file_path: /Presentation/UserStories
+project_file_path: marketplace/Presentation/UserStories
 
 # The Xcode group path to new modules
 project_group_path: marketplace/Presentation/UserStories
