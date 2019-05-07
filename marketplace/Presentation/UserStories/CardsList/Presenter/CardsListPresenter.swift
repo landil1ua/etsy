@@ -11,11 +11,11 @@ import Foundation
 class CardsListPresenter: CardsListModuleInput, CardsListViewOutput {
     
     
-    init() {
-        interactor = CardsListInteractor()
-        interactor.output = self
-        router = CardsListRouter()
-    }
+//    init() {
+//        interactor = CardsListInteractor()
+//        interactor.output = self
+//        router = CardsListRouter()
+//    }
     
     weak var view: CardsListViewController!
     var interactor: CardsListInteractorInput!
@@ -38,9 +38,6 @@ extension CardsListPresenter {
 extension CardsListPresenter: CardsListInteractorOutput {
     func dataFetched(data: [Card]) {
         _cardsList = data
-        for i in data {
-            print(i.images)
-        }
         view.reloadCollectionView()
         
     }

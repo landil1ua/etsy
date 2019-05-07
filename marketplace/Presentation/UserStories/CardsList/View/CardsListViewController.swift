@@ -24,6 +24,8 @@ class CardsListViewController: UIViewController {
       let presenter = CardsListPresenter()
         presenter.view = self
         self.output = presenter
+        presenter.interactor = CardsListInteractor()
+        presenter.interactor.output = presenter
         
         output.viewIsReady()
         self.setupViewController()

@@ -36,7 +36,7 @@ extension APIServiceImpl: APIService {
         dataTask?.cancel()
         
         // create full URL with keys
-        let url = urlBuilder?.buildURL(uri: .listings, options: ["MainImage"])
+        let url = urlBuilder?.buildURL(uri: .listings, includesOptions: ["MainImage"])
 
         // create new data task with full URL
         dataTask = urlSession.dataTask(with: url!) { data, response, error in
