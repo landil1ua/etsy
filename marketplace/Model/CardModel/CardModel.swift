@@ -10,12 +10,12 @@ import Foundation
 
 // Исправить названия, создать отдельные классы
 
-struct Response: Codable { // Base response
+class Response: Codable { // Base response
     let count: Int?
     let results: [Card]
 }
 
-struct Card: Codable { // Card
+class Card: Codable { // Card
     let title: String?
     let price: String?
     let currency_code: String?
@@ -23,6 +23,6 @@ struct Card: Codable { // Card
     var MainImage: Image 
 }
 
-struct Image: Codable { // CardImage with several images (not one)
+class Image: Codable { // CardImage with several images (not one)
     let url_fullxfull: String?
 }

@@ -14,6 +14,12 @@ class AppSettingsImpl {
         
     }
     
+    fileprivate func readValueFromPList(name: String, fromPlist plist: String) -> String {
+        let path = Bundle.main.path(forResource: plist, ofType: "plist")!
+        let dict = NSDictionary(contentsOfFile: path)!
+        return dict.object(forKey: name) as! String
+        
+    }
     
     
 }
@@ -24,11 +30,11 @@ extension AppSettingsImpl : AppSettings {
     //Изменить базовый урл
     
     var baseEndpoint: String {
-        return "https://openapi.etsy.com/v2/listings/active"
+        return readValueFromPList(name: "etsyBaseEndpoint", fromPlist: "Info")
     }
     
     var apiKey: String {
-        return "kmm4gja7yyezgktklwclksi8"
+        return readValueFromPList(name: "etsyAPIKey", fromPlist: "Info")
     }
     
     
