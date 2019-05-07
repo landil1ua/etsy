@@ -9,5 +9,6 @@
 import Foundation
 
 protocol CardsListInteractorOutput: class {
-
+    func dataFetched(data: [Card])
+    func dataFetchFailed()
 }

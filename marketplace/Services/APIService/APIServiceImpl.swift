@@ -14,12 +14,14 @@ class APIServiceImpl {
     let settings: AppSettings
     let urlSession: URLSession
     var dataTask: URLSessionDataTask?
+    let urlBuilder: URLBuilder?
     
     var results: [Card]?
     
     init() {
         settings = AppSettingsImpl()
         urlSession = URLSession(configuration: .default)
+        urlBuilder = URLBuilder(appSettings: settings)
     }
     
     
@@ -34,33 +36,31 @@ extension APIServiceImpl: APIService {
         dataTask?.cancel()
         
         // create full URL with keys
-        if var urlComponents = URLComponents(string: settings.baseEndpoint) {
-            urlComponents.query = "api_key=\(settings.apiKey)&includes=MainImage"
-            
-            guard let url = urlComponents.url else { return }
-            
-            // create new data task with full URL
-            dataTask = urlSession.dataTask(with: url) { data, response, error in
-                if let error = error {
-                    print(error.localizedDescription)
+        let url = urlBuilder?.buildURL(uri: .listings, options: ["MainImage"])
+
+        // create new data task with full URL
+        dataTask = urlSession.dataTask(with: url!) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                do {
+                    // Parse JSON response
+                    let cards = try JSONDecoder().decode(Response.self, from: data)
+                    
+                    // reload data with completion
+                    completionHandler(cards.results)
+                } catch {
+                    print(error)
                     return
-                } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    do {
-                        // Parse JSON response
-                        let cards = try JSONDecoder().decode(Response.self, from: data)
-                        
-                        // reload data with completion
-                        completionHandler(cards.results)
-                    } catch {
-                        print(error)
-                        return
-                    }
                 }
-                
             }
+            
         }
-        
         dataTask?.resume()
-        
     }
+    
+    
+    
 }
+

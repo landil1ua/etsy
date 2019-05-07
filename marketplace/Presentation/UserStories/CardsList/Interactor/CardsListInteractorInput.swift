@@ -9,5 +9,6 @@
 import Foundation
 
 protocol CardsListInteractorInput {
-
+    var output: CardsListPresenter? { get set }
+    func fetchCardsData()
 }

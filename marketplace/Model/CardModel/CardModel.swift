@@ -18,11 +18,27 @@ class Response: Codable { // Base response
 class Card: Codable { // Card
     let title: String?
     let price: String?
-    let currency_code: String?
+    let currency: String?
     let url: String?
-    var MainImage: Image 
+    var images: Image?
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case price
+        case currency = "currency_code"
+        case url
+        case images = "MainImage"
+    }
 }
 
 class Image: Codable { // CardImage with several images (not one)
-    let url_fullxfull: String?
+    let littleImage: String?
+    let mediumImage: String?
+    let fullSizeImage: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case littleImage = "url_170x135"
+        case mediumImage = "url_570xN"
+        case fullSizeImage = "url_fullxfull"
+    }
 }

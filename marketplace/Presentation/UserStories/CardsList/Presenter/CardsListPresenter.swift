@@ -6,27 +6,50 @@
 //  Copyright © 2019 myself. All rights reserved.
 //
 
-class CardsListPresenter: CardsListModuleInput, CardsListViewOutput, CardsListInteractorOutput {
+import Foundation
+
+class CardsListPresenter: CardsListModuleInput, CardsListViewOutput {
     
     
-    weak var view: CardsListViewInput!
+    init() {
+        interactor = CardsListInteractor()
+        interactor.output = self
+        router = CardsListRouter()
+    }
+    
+    weak var view: CardsListViewController!
     var interactor: CardsListInteractorInput!
     var router: CardsListRouterInput!
     
-    fileprivate var _cardsList: [Any] = []
-    
-    var categoryList: [Any] = []
+    fileprivate var _cardsList: [Card] = []
     
     func viewIsReady() {
-        
+        interactor.fetchCardsData()
     }
 }
 
 
 extension CardsListPresenter {
-    var cardsList : [Any] {
+    var cardsList : [Card] {
         return _cardsList
     }
+}
+
+extension CardsListPresenter: CardsListInteractorOutput {
+    func dataFetched(data: [Card]) {
+        _cardsList = data
+        for i in data {
+            print(i.images)
+        }
+        view.reloadCollectionView()
+        
+    }
+    
+    func dataFetchFailed() {
+        print("Error")
+    }
+    
+    
 }
 
 
@@ -36,5 +59,5 @@ extension CardsListPresenter {
     func loadCards() {
         
     }
-    
+
 }

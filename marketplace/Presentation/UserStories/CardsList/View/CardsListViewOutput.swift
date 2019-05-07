@@ -13,7 +13,7 @@ protocol CardsListViewOutput {
      Notify presenter that view is ready
      */
     
-    var categoryList : [Any] { get }
+    var cardsList : [Card] { get }
     
     func viewIsReady()
     

@@ -32,14 +32,12 @@ class CardViewCell: UICollectionViewCell {
             return
         }
         self.cardTitle.text = card.title
+        if let url = card.images?.mediumImage {
+            print(url)
+            self.cardImage.loadImageFromURL(imageURL: url)
+        }
         
-        
-        //                    if let cardsList = self.cardsList, let title = cardsList[indexPath.row].title, let imageURL = cardsList[indexPath.row].MainImage.url_fullxfull {
-        //                        cell.cardLabel.text = title
-        //                        cell.cardImage.loadImageFromURL(imageURL: imageURL)
-        //
-        //                    }
-        
+
     }
     
 }

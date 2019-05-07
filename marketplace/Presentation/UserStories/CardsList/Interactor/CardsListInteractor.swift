@@ -7,7 +7,21 @@
 //
 
 class CardsListInteractor: CardsListInteractorInput {
-
-    weak var output: CardsListInteractorOutput!
+    var output: CardsListPresenter?
+    
+    let apiElem: APIService?
+    
+    init() {
+        apiElem = APIServiceImpl()
+    }
+    
+    func fetchCardsData() {
+        self.apiElem?.getCards { (cards) in
+            
+            self.output?.dataFetched(data: cards)
+        }
+    }
+    
+    
 
 }

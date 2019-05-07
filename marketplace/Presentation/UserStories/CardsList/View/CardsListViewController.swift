@@ -12,9 +12,8 @@ class CardsListViewController: UIViewController {
     
     
     var output: CardsListViewOutput!
-    //    var api = APIServiceImpl()
     
-    var cardsList: [Card]?
+    //var cardsList: [Card] = []
     
     @IBOutlet weak var cardsListCollectionView: UICollectionView!
     
@@ -22,11 +21,14 @@ class CardsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        output = CardsListPresenter()
+      let presenter = CardsListPresenter()
+        presenter.view = self
+        self.output = presenter
+        
         output.viewIsReady()
         self.setupViewController()
         
-        //        api.getCards(completionHandler: updateCards(cards:))
+        
     }
     
     
@@ -34,21 +36,18 @@ class CardsListViewController: UIViewController {
     func setupInitialState() {
         
     }
+
+
     
-    
-    //    func updateCards(cards: [Card]) {
-    //        self.cardsList = cards
-    //        DispatchQueue.main.async {
-    //            self.cardsListCollectionView.reloadData()
-    //        }
-    //    }
 }
 
 
 extension CardsListViewController : CardsListViewInput {
     
     func reloadCollectionView() {
-        
+        OperationQueue.main.addOperation {
+            self.cardsListCollectionView.reloadData()
+        }
     }
     
 }
@@ -74,15 +73,13 @@ extension CardsListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let cardsList = self.cardsList {
-            return cardsList.count
-        }
-        return 100
+        return output.cardsList.count
+        //return 100
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardViewCell.id, for: indexPath) as? CardViewCell {
-            cell.configure (with : nil)
+            cell.configure (with : self.output.cardsList[indexPath.row])
             return cell
         }
         return UICollectionViewCell()
