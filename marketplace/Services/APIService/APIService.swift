@@ -12,5 +12,7 @@ import UIKit
 protocol APIService {
     
     func getCards(completionHandler: @escaping ([Card])->())
+    func getCardDetails(for cardId: Int, completionHandler: @escaping ([Card])->())
+    func getSearchResults(for searchTerm: String, completionHandler: @escaping ([Card])->())
     
 }

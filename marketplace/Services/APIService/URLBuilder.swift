@@ -16,24 +16,34 @@ class URLBuilder {
         self.settings = appSettings
     }
     
+    
     enum RequestsURI: String {
         case listings = "listings/active"
         case categories = "taxonomy/categories"
     }
     
-    func buildURL(uri: RequestsURI, includesOptions options: [String]?) -> URL? {
-        var url = "\(settings.baseEndpoint)/\(uri.rawValue)?api_key=\(settings.apiKey)"
-        if let options = options {
-            url += "&includes=\(options.joined(separator: ","))"
-        }
-        return URL(string: url)
+    
+   
+    func buildSearchURL(for keywords: String) -> URL {
+        var url = "\(buildURL(uri: .listings))"
+        let searchString = keywords.replacingOccurrences(of: " ", with: "%20")
+        url += "&keywords=\(searchString)"
+        
+        return URL(string: url)!
     }
     
-//    func buildURL(uri: RequestsURI, includesOptions options: [String]?, limit: Int, offset: Int) -> URL? {
-//        var url = String(contentsOf: <#T##URL#>)
-//        url += "&offset=50&limit=50"
-//        return url
-//    }
+    func buildURLForCardDetails(for cardId: Int) -> URL {
+        let url = "\(settings.baseEndpoint)/listings/\(cardId)?api_key=\(settings.apiKey)&includes=MainImage"
+        
+        return URL(string: url)!
+    }
+    
+    
+    func buildURL(uri: RequestsURI) -> URL {
+        
+        let url = "\(settings.baseEndpoint)\(uri.rawValue)?api_key=\(settings.apiKey)&includes=MainImage"
+        return (URL(string: url)!)
+    }
     
     
 }
