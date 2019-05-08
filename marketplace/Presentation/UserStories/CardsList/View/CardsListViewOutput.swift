@@ -16,5 +16,6 @@ protocol CardsListViewOutput {
     var cardsList : [Card] { get }
 
     func viewIsReady()
+    func getSearchResults(for searchString: String)
     
 }

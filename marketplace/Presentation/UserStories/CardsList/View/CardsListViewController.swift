@@ -10,12 +10,17 @@ import UIKit
 
 class CardsListViewController: UIViewController {
     
-    private var refreshControl: UIRefreshControl!
-    
-    
+    // MARK: VIPER linked classes
     var output: CardsListViewOutput!
     
+    // MARK: IBOutlets
     @IBOutlet weak var cardsListCollectionView: UICollectionView!
+    @IBOutlet weak var searchField: UISearchBar!
+    @IBOutlet weak var loadingDataActivityIndicator: UIActivityIndicatorView!
+    
+    // MARK: Another variables
+    private var refreshControl: UIRefreshControl!
+    
     
     // MARK: Life cycle
     override func viewDidLoad() {
@@ -23,7 +28,7 @@ class CardsListViewController: UIViewController {
         
         self.setupViewController()
         output.viewIsReady()
-
+        
     }
     
     @objc private func refreshCardsData( _ sender: Any) {
@@ -44,10 +49,13 @@ extension CardsListViewController : CardsListViewInput {
     func showError() {
         
     }
-
+    
+    
+    
     func showCards(cards: [Card]) {
         OperationQueue.main.addOperation {
             self.cardsListCollectionView.reloadData()
+            self.loadingDataActivityIndicator.stopAnimating()
         }
     }
     
@@ -64,13 +72,15 @@ fileprivate extension CardsListViewController {
     func setupViewController () {
         self.setupCollectionView()
         self.setupRefreshControl()
+        self.setupActivityIndicator()
+        self.setupSearchBar()
         
         
     }
     
     func setupCollectionView () {
         self.cardsListCollectionView.register(CardViewCell.cellNib, forCellWithReuseIdentifier: CardViewCell.id)
-
+        
     }
     
     func setupRefreshControl() {
@@ -81,6 +91,16 @@ fileprivate extension CardsListViewController {
         // customizing refresh control
         refreshControl.tintColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
         refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data...")
+    }
+    
+    func setupActivityIndicator() {
+        loadingDataActivityIndicator.hidesWhenStopped = true
+        loadingDataActivityIndicator.color = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        loadingDataActivityIndicator.startAnimating()
+    }
+    
+    func setupSearchBar() {
+        searchField.delegate = self
     }
     
 }
@@ -111,4 +131,15 @@ extension CardsListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CardViewCell.returnSize()
     }
+}
+
+
+extension CardsListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        
+        output.getSearchResults(for: searchText)
+    }
+    
+    
 }

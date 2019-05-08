@@ -10,4 +10,5 @@ import Foundation
 
 protocol CardsListInteractorInput {
     func fetchCardsData()
+    func fetchSearchResults(for searchString: String)
 }

@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="dj3-fd-sPn">
+                            <searchBar contentMode="redraw" placeholder="Search something" translatesAutoresizingMaskIntoConstraints="NO" id="dj3-fd-sPn">
                                 <rect key="frame" x="0.0" y="44" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -31,6 +31,11 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="ND1-DN-rQc">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="796"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" red="1" green="0.096373205370000006" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </activityIndicatorView>
                                 <cells/>
                                 <connections>
                                     <outlet property="dataSource" destination="gKV-pv-vwD" id="H8M-cE-cLA"/>
@@ -52,6 +57,8 @@
                     </view>
                     <connections>
                         <outlet property="cardsListCollectionView" destination="ItX-qg-A1P" id="t5w-u4-GiV"/>
+                        <outlet property="loadingDataActivityIndicator" destination="ND1-DN-rQc" id="i5e-7J-b5u"/>
+                        <outlet property="searchField" destination="dj3-fd-sPn" id="41S-4s-QFF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0bP-Xn-L9N" userLabel="First Responder" sceneMemberID="firstResponder"/>

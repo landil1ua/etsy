@@ -35,6 +35,10 @@ extension CardsListPresenter: CardsListViewOutput {
 }
 
 extension CardsListPresenter: CardsListInteractorOutput {
+    func getSearchResults(for searchString: String) {
+        interactor.fetchSearchResults(for: searchString)
+    }
+    
     func cardsFetched(data: [Card]) {
         _cardsList.removeAll()
         _cardsList = data

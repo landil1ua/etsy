@@ -16,6 +16,16 @@ class CardsListInteractor {
 
 // MARK: Protocol CardsListInteractorInput
 extension CardsListInteractor: CardsListInteractorInput {
+    func fetchSearchResults(for searchString: String) {
+        self.apiService?.getSearchResults(for: searchString, completionHandler: { (searchResults) in
+            if(searchResults.count != 0) { // check results of request
+                self.output?.cardsFetched(data: searchResults)
+            } else {
+                self.output?.cardsFetchFailed()
+            }
+        })
+    }
+    
 
     func fetchCardsData() {
         self.apiService!.getCards { (cards) in
