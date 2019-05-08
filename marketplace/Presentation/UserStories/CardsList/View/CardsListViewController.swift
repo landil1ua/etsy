@@ -10,6 +10,8 @@ import UIKit
 
 class CardsListViewController: UIViewController {
     
+    private var refreshControl: UIRefreshControl!
+    
     
     var output: CardsListViewOutput!
     
@@ -19,34 +21,35 @@ class CardsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         self.setupViewController()
         output.viewIsReady()
-        
-        
+
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+    @objc private func refreshCardsData( _ sender: Any) {
+        output.viewIsReady()
     }
 }
 
 // MARK: CardsListViewInput
 extension CardsListViewController : CardsListViewInput {
+    func stopRefreshing() {
+        OperationQueue.main.addOperation {
+            if(self.refreshControl.isRefreshing) {
+                self.refreshControl.endRefreshing()
+            }
+        }
+    }
+    
     func showError() {
         
     }
-    
-    
+
     func showCards(cards: [Card]) {
         OperationQueue.main.addOperation {
             self.cardsListCollectionView.reloadData()
         }
     }
-    
-    
-    
     
     func setupInitialState() {
         
@@ -60,10 +63,24 @@ fileprivate extension CardsListViewController {
     
     func setupViewController () {
         self.setupCollectionView()
+        self.setupRefreshControl()
+        
+        
     }
     
     func setupCollectionView () {
         self.cardsListCollectionView.register(CardViewCell.cellNib, forCellWithReuseIdentifier: CardViewCell.id)
+
+    }
+    
+    func setupRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        self.cardsListCollectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshCardsData(_:)), for: .valueChanged)
+        
+        // customizing refresh control
+        refreshControl.tintColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data...")
     }
     
 }

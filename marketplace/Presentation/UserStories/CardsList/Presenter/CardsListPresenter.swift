@@ -28,6 +28,7 @@ extension CardsListPresenter: CardsListViewOutput {
     }
     
     func viewIsReady() {
+        
         interactor.fetchCardsData()
     }
     
@@ -35,8 +36,11 @@ extension CardsListPresenter: CardsListViewOutput {
 
 extension CardsListPresenter: CardsListInteractorOutput {
     func cardsFetched(data: [Card]) {
+        _cardsList.removeAll()
         _cardsList = data
+
         view.showCards(cards: cardsList)
+        view.stopRefreshing()
     }
     
     func cardsFetchFailed() {

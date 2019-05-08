@@ -17,4 +17,6 @@ protocol CardsListViewInput: class {
     
     func showCards(cards: [Card])
     func showError()
+    
+    func stopRefreshing()
 }

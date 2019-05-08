@@ -11,8 +11,10 @@ import UIKit
 class CardViewCell: UICollectionViewCell {
     
     
+    
     @IBOutlet weak var cardTitle: UILabel!
     @IBOutlet weak var cardImage: UIImageView!
+    @IBOutlet weak var cardPrice: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,8 +37,23 @@ class CardViewCell: UICollectionViewCell {
         if let url = card.images?.mediumImage {
             self.cardImage.loadImageFromURL(imageURL: url)
         }
-        
-
+        self.cardPrice.text = configurePriceText(price: card.price, withCurrency: card.currency)
+    }
+    
+    fileprivate func configurePriceText(price: String?, withCurrency currency: String?) -> String {
+        guard let price = price, let currency = currency else { return "No price" }
+        var fullPrice = ""
+        switch currency {
+        case "USD", "CAD", "AUD", "NZD":
+            fullPrice = "＄\(price)"
+        case "EUR":
+            fullPrice = "€\(price)"
+        case "GBP":
+            fullPrice = "￡\(price)"
+        default:
+            fullPrice = "\(price) \(currency)"
+        }
+        return fullPrice
     }
     
 }

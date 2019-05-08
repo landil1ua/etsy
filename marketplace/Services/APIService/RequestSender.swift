@@ -29,6 +29,8 @@ class RequestSender {
     // MARK: sendRequest
     func sendRequest(url: URL, completionHandler: @escaping(([Card])->())) {
         
+        print("request: \(url)")
+        
         sessionTask = session.dataTask(with: url) { data, response, error in
             if let error = error {
                 print(error.localizedDescription)
