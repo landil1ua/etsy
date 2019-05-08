@@ -6,22 +6,27 @@
 //  Copyright © 2019 myself. All rights reserved.
 //
 
-class CardsListInteractor: CardsListInteractorInput {
+class CardsListInteractor {
+    
     var output: CardsListPresenter?
     
-    let apiElem: APIService?
-    
-    init() {
-        apiElem = APIServiceImpl()
-    }
-    
-    func fetchCardsData() {
-        self.apiElem?.getCards { (cards) in
-            
-            self.output?.dataFetched(data: cards)
-        }
-    }
-    
-    
+    var apiService: APIService?
 
+}
+
+// MARK: Protocol CardsListInteractorInput
+extension CardsListInteractor: CardsListInteractorInput {
+
+    func fetchCardsData() {
+        self.apiService!.getCards { (cards) in
+            if(cards.count != 0) { // check results of request
+                self.output?.cardsFetched(data: cards)
+            } else {
+                self.output?.cardsFetchFailed()
+            }
+        }
+        
+    }
+    
+    
 }

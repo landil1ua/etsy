@@ -8,46 +8,46 @@
 
 import Foundation
 
-class CardsListPresenter: CardsListModuleInput, CardsListViewOutput {
+class CardsListPresenter: CardsListModuleInput {
+
     
-    
-//    init() {
-//        interactor = CardsListInteractor()
-//        interactor.output = self
-//        router = CardsListRouter()
-//    }
-    
-    weak var view: CardsListViewController!
+    weak var view: CardsListViewInput!
     var interactor: CardsListInteractorInput!
     var router: CardsListRouterInput!
     
     fileprivate var _cardsList: [Card] = []
     
-    func viewIsReady() {
-        interactor.fetchCardsData()
-    }
+    
 }
 
 
-extension CardsListPresenter {
+
+extension CardsListPresenter: CardsListViewOutput {
     var cardsList : [Card] {
         return _cardsList
     }
+    
+    func viewIsReady() {
+        interactor.fetchCardsData()
+    }
+    
 }
 
 extension CardsListPresenter: CardsListInteractorOutput {
-    func dataFetched(data: [Card]) {
+    func cardsFetched(data: [Card]) {
         _cardsList = data
-        view.reloadCollectionView()
-        
+        view.showCards(cards: cardsList)
     }
     
-    func dataFetchFailed() {
-        print("Error")
+    func cardsFetchFailed() {
+        view.showError()
     }
+    
+    
     
     
 }
+
 
 
 // API Methods

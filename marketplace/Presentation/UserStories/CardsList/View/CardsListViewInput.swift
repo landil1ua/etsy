@@ -14,4 +14,7 @@ protocol CardsListViewInput: class {
     */
 
     func setupInitialState()
+    
+    func showCards(cards: [Card])
+    func showError()
 }

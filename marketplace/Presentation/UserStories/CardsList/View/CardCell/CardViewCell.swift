@@ -33,7 +33,6 @@ class CardViewCell: UICollectionViewCell {
         }
         self.cardTitle.text = card.title
         if let url = card.images?.mediumImage {
-            print(url)
             self.cardImage.loadImageFromURL(imageURL: url)
         }
         

@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Cards List View Controller-->
+        <!--Cardslist View Controller-->
         <scene sceneID="DmH-vn-yk2">
             <objects>
                 <viewController id="gKV-pv-vwD" customClass="CardsListViewController" customModule="marketplace" customModuleProvider="target" sceneMemberID="viewController">
@@ -55,6 +55,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0bP-Xn-L9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="CNg-OE-g10" customClass="CardsListModuleInitializer" customModule="marketplace" customModuleProvider="target">
+                    <connections>
+                        <outlet property="cardslistViewController" destination="gKV-pv-vwD" id="SWu-OI-QmG"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="231.8840579710145" y="148.66071428571428"/>
         </scene>

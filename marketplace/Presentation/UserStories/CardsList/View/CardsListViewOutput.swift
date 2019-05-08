@@ -12,9 +12,9 @@ protocol CardsListViewOutput {
      @author landil
      Notify presenter that view is ready
      */
-    
+
     var cardsList : [Card] { get }
-    
+
     func viewIsReady()
     
 }

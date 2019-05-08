@@ -29,11 +29,11 @@ class URLBuilder {
         return URL(string: url)
     }
     
-    func buildURL(uri: RequestsURI, includesOptions options: [String]?, limit: Int, offset: Int) -> URL? {
-        var url = String(contentsOf: <#T##URL#>)
-        url += "&offset=50&limit=50"
-        return url
-    }
+//    func buildURL(uri: RequestsURI, includesOptions options: [String]?, limit: Int, offset: Int) -> URL? {
+//        var url = String(contentsOf: <#T##URL#>)
+//        url += "&offset=50&limit=50"
+//        return url
+//    }
     
     
 }
