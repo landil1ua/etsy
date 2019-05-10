@@ -17,6 +17,9 @@ class CardsListInteractor {
 // MARK: Protocol CardsListInteractorInput
 extension CardsListInteractor: CardsListInteractorInput {
     func fetchSearchResults(for searchString: String) {
+        
+        //[weak self] - Read about it and make changes to this and other methods
+        //You can also return an error in the block. Please add it
         self.apiService?.getSearchResults(for: searchString, completionHandler: { (searchResults) in
             if(searchResults.count != 0) { // check results of request
                 self.output?.cardsFetched(data: searchResults)

@@ -11,16 +11,25 @@ import UIKit
 
 class APIServiceImpl {
     
-    let settings: AppSettings
+    fileprivate var settingsService: AppSettingsService
+    
+    
     let urlSession: URLSession
     let urlBuilder: URLBuilder
     let requestSender: RequestSender
-    
-    
-    init() {
-        settings = AppSettingsImpl()
+
+    fileprivate let builder: RequestBuilder
+    fileprivate let executor: RequestExecutor
+
+    init(settingsService : AppSettingsService) {
+        self.settingsService = settingsService
         urlSession = URLSession(configuration: .default)
-        urlBuilder = URLBuilder(appSettings: settings)
+        urlBuilder = URLBuilder(settingsService: settingsService)
+        
+        builder = RequestBuilder.init(endpoint: settingsService.baseEndpoint,
+                                      apiKey : settingsService.apiKey)
+        executor = RequestExecutor()
+
         requestSender = RequestSender()
     }
     
@@ -39,8 +48,8 @@ extension APIServiceImpl: APIService {
     
     
     func getCards(completionHandler: @escaping ([Card]) -> ()) {
-        requestSender.sendRequest(url: urlBuilder.buildURL(uri: .listings), completionHandler: completionHandler)
-        
+        executor.runRequest(request: self.builder.listningList(offset: 0, limit: 50)!, completionHandler: completionHandler)
+//        requestSender.sendRequest(url: urlBuilder.buildURL(uri: .listings), completionHandler: completionHandler)
     }
 
 }

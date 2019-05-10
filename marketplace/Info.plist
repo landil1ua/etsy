@@ -22,8 +22,6 @@
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>CardsList</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -42,7 +40,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>etsyBaseEndpoint</key>
-	<string>https://openapi.etsy.com/v2/</string>
+	<string>https://openapi.etsy.com/v2</string>
 	<key>etsyAPIKey</key>
 	<string>kmm4gja7yyezgktklwclksi8</string>
 </dict>

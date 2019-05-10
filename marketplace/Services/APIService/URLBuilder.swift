@@ -10,20 +10,17 @@ import Foundation
 
 
 class URLBuilder {
-    let settings: AppSettings
+    let settingsService: AppSettingsService
     
-    init(appSettings: AppSettings) {
-        self.settings = appSettings
+    init(settingsService: AppSettingsService) {
+        self.settingsService = settingsService
     }
-    
     
     enum RequestsURI: String {
         case listings = "listings/active"
         case categories = "taxonomy/categories"
     }
     
-    
-   
     func buildSearchURL(for keywords: String) -> URL {
         var url = "\(buildURL(uri: .listings))"
         let searchString = keywords.replacingOccurrences(of: " ", with: "%20")
@@ -33,15 +30,14 @@ class URLBuilder {
     }
     
     func buildURLForCardDetails(for cardId: Int) -> URL {
-        let url = "\(settings.baseEndpoint)/listings/\(cardId)?api_key=\(settings.apiKey)&includes=MainImage"
+        let url = "\(settingsService.baseEndpoint)/listings/\(cardId)?api_key=\(settingsService.apiKey)&includes=MainImage"
         
         return URL(string: url)!
     }
     
     
     func buildURL(uri: RequestsURI) -> URL {
-        
-        let url = "\(settings.baseEndpoint)\(uri.rawValue)?api_key=\(settings.apiKey)&includes=MainImage"
+        let url = "\(settingsService.baseEndpoint)\(uri.rawValue)?api_key=\(settingsService.apiKey)&includes=MainImage"
         return (URL(string: url)!)
     }
     

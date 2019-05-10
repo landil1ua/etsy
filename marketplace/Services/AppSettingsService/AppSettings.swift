@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AppSettings {
+protocol AppSettingsService {
     
     var baseEndpoint : String { get }
     var apiKey       : String { get }

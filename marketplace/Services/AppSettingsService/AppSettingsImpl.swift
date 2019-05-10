@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AppSettingsImpl {
+class AppSettingsServiceImpl {
     
     init() {
         
@@ -24,7 +24,7 @@ class AppSettingsImpl {
     
 }
 
-extension AppSettingsImpl : AppSettings {
+extension AppSettingsServiceImpl : AppSettingsService {
     
     //Добавить Info.plist
     //Изменить базовый урл

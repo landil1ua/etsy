@@ -84,6 +84,8 @@ fileprivate extension CardsListViewController {
     }
     
     func setupRefreshControl() {
+        //Make a custom UIRefreshControl. Make UIColor extension with all colors that we use in this application.
+
         self.refreshControl = UIRefreshControl()
         self.cardsListCollectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshCardsData(_:)), for: .valueChanged)
@@ -94,6 +96,7 @@ fileprivate extension CardsListViewController {
     }
     
     func setupActivityIndicator() {
+        //Make a custom UIActivityIndicatorView
         loadingDataActivityIndicator.hidesWhenStopped = true
         loadingDataActivityIndicator.color = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         loadingDataActivityIndicator.startAnimating()

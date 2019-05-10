@@ -8,13 +8,13 @@
 
 import UIKit
 
-class CardViewCell: UICollectionViewCell {
+class CardViewCell: UICollectionViewCell, CellInterface {
     
-    
-    
-    @IBOutlet weak var cardTitle: UILabel!
-    @IBOutlet weak var cardImage: UIImageView!
-    @IBOutlet weak var cardPrice: UILabel!
+    //Change properties name
+    @IBOutlet weak var cardTitle: UILabel!        //cardTitleLabel
+    @IBOutlet weak var cardPrice: UILabel!        //cardPriceLabel
+
+    @IBOutlet weak var cardImage: UIImageView!    //cardImageView
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,13 +34,21 @@ class CardViewCell: UICollectionViewCell {
             return
         }
         self.cardTitle.text = card.title
+        
+        //Change ImageViewExtension - make imageURL optional
         if let url = card.images?.mediumImage {
             self.cardImage.loadImageFromURL(imageURL: url)
         }
         self.cardPrice.text = configurePriceText(price: card.price, withCurrency: card.currency)
+//        self.cardPrice.text = card.priceWithCurrency
     }
     
-    fileprivate func configurePriceText(price: String?, withCurrency currency: String?) -> String {
+}
+
+fileprivate extension CardViewCell {
+    
+    //Delete this part of the code. Add NSLocale extension and add new property "priceWithCurrency" to Card object.
+    func configurePriceText(price: String?, withCurrency currency: String?) -> String {
         guard let price = price, let currency = currency else { return "No price" }
         var fullPrice = ""
         switch currency {
@@ -57,5 +65,3 @@ class CardViewCell: UICollectionViewCell {
     }
     
 }
-
-extension CardViewCell: CellInterface { }

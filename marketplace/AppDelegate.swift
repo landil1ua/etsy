@@ -15,7 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        ServicesAssembly.setup(application: application)
+        
+        let mainStoryboard : UIStoryboard = UIStoryboard(name: "CardsList", bundle: nil)
+        let initialViewController : UIViewController = mainStoryboard.instantiateInitialViewController()! 
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
         
         return true
     }

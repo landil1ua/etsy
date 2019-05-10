@@ -27,7 +27,7 @@ class CardsListModuleConfigurator {
 
         let interactor = CardsListInteractor()
         interactor.output = presenter
-        interactor.apiService = APIServiceImpl()
+        interactor.apiService = ServicesAssembly.shared.apiService
 
         presenter.interactor = interactor
         viewController.output = presenter
