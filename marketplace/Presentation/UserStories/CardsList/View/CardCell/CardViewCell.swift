@@ -11,8 +11,8 @@ import UIKit
 class CardViewCell: UICollectionViewCell, CellInterface {
     
     //Change properties name
-    @IBOutlet weak var cardTitle: UILabel!        //cardTitleLabel
-    @IBOutlet weak var cardPrice: UILabel!        //cardPriceLabel
+    @IBOutlet weak var cardTitleLabel: UILabel!        //cardTitleLabel
+    @IBOutlet weak var cardPriceLabel: UILabel!        //cardPriceLabel
 
     @IBOutlet weak var cardImage: UIImageView!    //cardImageView
 
@@ -33,35 +33,18 @@ class CardViewCell: UICollectionViewCell, CellInterface {
         guard let card = card else {
             return
         }
-        self.cardTitle.text = card.title
+        self.cardTitleLabel.text = card.title
         
         //Change ImageViewExtension - make imageURL optional
         if let url = card.images?.mediumImage {
             self.cardImage.loadImageFromURL(imageURL: url)
         }
-        self.cardPrice.text = configurePriceText(price: card.price, withCurrency: card.currency)
-//        self.cardPrice.text = card.priceWithCurrency
+        guard let price = card.price else {
+            self.cardPriceLabel.text = "No price"
+            return
+        }
+        self.cardPriceLabel.text = price.toCurrency(forCurrencyCode: card.currency)
     }
     
 }
 
-fileprivate extension CardViewCell {
-    
-    //Delete this part of the code. Add NSLocale extension and add new property "priceWithCurrency" to Card object.
-    func configurePriceText(price: String?, withCurrency currency: String?) -> String {
-        guard let price = price, let currency = currency else { return "No price" }
-        var fullPrice = ""
-        switch currency {
-        case "USD", "CAD", "AUD", "NZD":
-            fullPrice = "＄\(price)"
-        case "EUR":
-            fullPrice = "€\(price)"
-        case "GBP":
-            fullPrice = "￡\(price)"
-        default:
-            fullPrice = "\(price) \(currency)"
-        }
-        return fullPrice
-    }
-    
-}

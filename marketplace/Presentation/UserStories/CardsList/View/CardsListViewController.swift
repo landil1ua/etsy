@@ -32,7 +32,8 @@ class CardsListViewController: UIViewController {
     }
     
     @objc private func refreshCardsData( _ sender: Any) {
-        output.viewIsReady()
+        
+        // TODO: Create another method for refresh in Presenter
     }
 }
 
