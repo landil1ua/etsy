@@ -13,7 +13,6 @@
 		2C230C73228978FB004891E4 /* Refresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C230C72228978FB004891E4 /* Refresher.swift */; };
 		2C230C78228992E3004891E4 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C230C77228992E3004891E4 /* UIColorExtension.swift */; };
 		2C65475C2285746E006F5118 /* CurrencyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C65475B2285746E006F5118 /* CurrencyExtensions.swift */; };
-		2C6547662285CFB7006F5118 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6547652285CFB7006F5118 /* ViewExtensions.swift */; };
 		2C757622228016AF00C77AC9 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C757621228016AF00C77AC9 /* AppSettings.swift */; };
 		2C757624228016CE00C77AC9 /* AppSettingsImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C757623228016CE00C77AC9 /* AppSettingsImpl.swift */; };
 		2C75762622801E0500C77AC9 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C75762522801E0500C77AC9 /* APIService.swift */; };
@@ -66,7 +65,6 @@
 		2C230C72228978FB004891E4 /* Refresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Refresher.swift; sourceTree = "<group>"; };
 		2C230C77228992E3004891E4 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		2C65475B2285746E006F5118 /* CurrencyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExtensions.swift; sourceTree = "<group>"; };
-		2C6547652285CFB7006F5118 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		2C757621228016AF00C77AC9 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		2C757623228016CE00C77AC9 /* AppSettingsImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsImpl.swift; sourceTree = "<group>"; };
 		2C75762522801E0500C77AC9 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 				DB1B2E6D22847B41004A4858 /* Dictionary */,
 				2CF7D6C02282CD8500A45F2C /* ImageViewExtension.swift */,
 				2C65475B2285746E006F5118 /* CurrencyExtensions.swift */,
-				2C6547652285CFB7006F5118 /* ViewExtensions.swift */,
 				2C230C77228992E3004891E4 /* UIColorExtension.swift */,
 			);
 			path = Extensions;
@@ -541,7 +538,6 @@
 				A0EA5EC867244E382EF37D73 /* CardsListViewOutput.swift in Sources */,
 				DB1B2E6222845716004A4858 /* CardDetailsInteractorInput.swift in Sources */,
 				DB1B2E7022847B91004A4858 /* CharacterSet+URLQueryValueAllowed.swift in Sources */,
-				2C6547662285CFB7006F5118 /* ViewExtensions.swift in Sources */,
 				DB1B2E6822847250004A4858 /* ServicesAssemblyProtocol.swift in Sources */,
 				DB1B2E5822845716004A4858 /* CardDetailsRouter.swift in Sources */,
 				2C230C73228978FB004891E4 /* Refresher.swift in Sources */,

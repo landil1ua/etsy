@@ -19,7 +19,9 @@ class CardsListViewController: UIViewController {
     @IBOutlet weak var loadingDataActivityIndicator: UIActivityIndicatorView!
     
     // MARK: Another variables
-    private var refreshControl: UIRefreshControl!
+    private var refreshControl: Refresher!
+    
+    
     
     
     // MARK: Life cycle
@@ -28,28 +30,21 @@ class CardsListViewController: UIViewController {
         
         self.setupViewController()
         output.viewIsReady()
+        refreshControl = Refresher(presenter: self.output)
+        refreshControl.setupRefreshControl(for: self.cardsListCollectionView)
         
         if let flowLayout = cardsListCollectionView.collectionViewLayout as? UICollectionViewFlowLayout, let collectionView = cardsListCollectionView {
-            let width = UIScreen.main.bounds.width
-            flowLayout.estimatedItemSize = CGSize(width: width, height: 200)
+            let w = collectionView.frame.width
+            flowLayout.estimatedItemSize = CGSize(width: w, height: 200)
         }
         
-    }
-    
-    @objc private func refreshCardsData( _ sender: Any) {
-        
-        output.refreshView()
     }
 }
 
 // MARK: CardsListViewInput
 extension CardsListViewController : CardsListViewInput {
     func stopRefreshing() {
-        OperationQueue.main.addOperation {
-            if(self.refreshControl.isRefreshing) {
-                self.refreshControl.endRefreshing()
-            }
-        }
+        refreshControl.stopRefreshing()
     }
     
     func showError(error: ResponseError) {
@@ -79,34 +74,31 @@ fileprivate extension CardsListViewController {
     
     func setupViewController () {
         self.setupCollectionView()
-        self.setupRefreshControl()
+        //self.setupRefreshControl()
         self.setupActivityIndicator()
         self.setupSearchBar()
-        
-        
     }
     
     func setupCollectionView () {
         self.cardsListCollectionView.register(CardViewCell.cellNib, forCellWithReuseIdentifier: CardViewCell.id)
-        
     }
     
-    func setupRefreshControl() {
-        //Make a custom UIRefreshControl. Make UIColor extension with all colors that we use in this application.
-        
-        self.refreshControl = UIRefreshControl()
-        self.cardsListCollectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshCardsData(_:)), for: .valueChanged)
-        
-        // customizing refresh control
-        refreshControl.tintColor = UIColor.greenColor
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data...")
-    }
+    //    func setupRefreshControl() {
+    //        //Make a custom UIRefreshControl. Make UIColor extension with all colors that we use in this application.
+    //
+    //        self.refreshControl = UIRefreshControl()
+    //        self.cardsListCollectionView.refreshControl = refreshControl
+    //        refreshControl.addTarget(self, action: #selector(refreshCardsData(_:)), for: .valueChanged)
+    //
+    //        // customizing refresh control
+    //        refreshControl.tintColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+    //        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data...")
+    //    }
     
     func setupActivityIndicator() {
         //Make a custom UIActivityIndicatorView
         loadingDataActivityIndicator.hidesWhenStopped = true
-        loadingDataActivityIndicator.color = UIColor.orangeColor
+        loadingDataActivityIndicator.color = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
         loadingDataActivityIndicator.startAnimating()
     }
     
@@ -137,20 +129,11 @@ extension CardsListViewController: UICollectionViewDataSource {
 }
 
 
-//// MARK: UICollectionViewDelegateFlowLayout
-//extension CardsListViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CardViewCell.returnSize()
-//    }
-//}
-
-
 extension CardsListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
         
         output.obtainSearchResults(for: searchText)
     }
-    
-    
 }
+
