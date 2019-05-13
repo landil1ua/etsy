@@ -21,11 +21,24 @@ class RequestBuilder {
     }
     
     // MARK: - Requests
-    func listningList (offset: Int, limit: Int) -> URLRequest? {
+    func listingList (offset: Int, limit: Int) -> URLRequest? {
         let parameters = ["offset": offset,
                           "limit" : limit,
                           "includes" : "MainImage"] as [String : Any]
         
+        return self.GETRequest(url: self.requestUrlWithParameters(path: "/listings/active", parameters: parameters))
+    }
+    
+    func listingProductDetails(for cardId: Int) -> URLRequest? {
+        let parameters = ["includes" : "MainImage,Images"] as [String : Any]
+        return self.GETRequest(url: self.requestUrlWithParameters(path: "/listings/\(cardId)", parameters: parameters))
+    }
+    
+    func searchResultsList(keywords: String, offset: Int, limit: Int) -> URLRequest? {
+        let parameters = [ "keywords": keywords,
+                           "offset": offset,
+                           "limit" : limit,
+                           "includes" : "MainImage"] as [String : Any]
         return self.GETRequest(url: self.requestUrlWithParameters(path: "/listings/active", parameters: parameters))
     }
     
@@ -47,14 +60,14 @@ fileprivate extension RequestBuilder {
     func requestUrl(path: String) -> URL? {
         return URL.init(string: endpoint + path)
     }
-
+    
     
     // MARK: Requests
     func GETRequest (url : URL?) -> URLRequest? {
         if let url =  url {
             var request : URLRequest = URLRequest.init(url: url)
-                request.httpMethod = "GET"
-                request.timeoutInterval = 60
+            request.httpMethod = "GET"
+            request.timeoutInterval = 60
             return request
         }
         return nil
@@ -76,5 +89,5 @@ fileprivate extension RequestBuilder {
         }
         return nil
     }
-
+    
 }

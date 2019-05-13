@@ -11,7 +11,7 @@ class CardsListInteractor {
     var output: CardsListPresenter?
     
     var apiService: APIService?
-
+    
 }
 
 // MARK: Protocol CardsListInteractorInput
@@ -20,24 +20,27 @@ extension CardsListInteractor: CardsListInteractorInput {
         
         //[weak self] - Read about it and make changes to this and other methods
         //You can also return an error in the block. Please add it
-        self.apiService?.getSearchResults(for: searchString, completionHandler: { (searchResults) in
-            if(searchResults.count != 0) { // check results of request
-                self.output?.cardsFetched(data: searchResults)
-            } else {
-                self.output?.cardsFetchFailed()
+        
+        // TODO: change limit and offset
+        self.apiService?.receiveSearchResults(offset: 0, limit: 30, for: searchString, completionHandler: { [weak self] (error, cards) in
+            if let error = error {
+                self?.output?.cardsFetchFailed(error: error)
+            } else if let cards = cards {
+                self?.output?.cardsFetched(data: cards)
             }
         })
     }
     
-
+    
     func fetchCardsData() {
-        self.apiService!.getCards { (cards) in
-            if(cards.count != 0) { // check results of request
-                self.output?.cardsFetched(data: cards)
-            } else {
-                self.output?.cardsFetchFailed()
+        // TODO: change limit and offset
+        self.apiService?.receiveCards(offset: 0, limit: 30, completionHandler: { [weak self] (error, cards) in
+            if let error = error  {
+                self?.output?.cardsFetchFailed(error: error)
+            } else if let cards = cards {
+                self?.output?.cardsFetched(data: cards)
             }
-        }
+        })
         
     }
     

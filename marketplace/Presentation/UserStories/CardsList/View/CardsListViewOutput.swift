@@ -12,10 +12,11 @@ protocol CardsListViewOutput {
      @author landil
      Notify presenter that view is ready
      */
-
+    
     var cardsList : [Card] { get }
-
+    
     func viewIsReady()
-    func getSearchResults(for searchString: String)
+    func refreshView()
+    func obtainSearchResults(for searchString: String)
     
 }

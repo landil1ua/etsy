@@ -10,5 +10,5 @@ import Foundation
 
 protocol CardsListInteractorOutput: class {
     func cardsFetched(data: [Card])
-    func cardsFetchFailed()
+    func cardsFetchFailed(error: ResponseError)
 }

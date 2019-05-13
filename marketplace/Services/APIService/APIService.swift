@@ -9,10 +9,15 @@
 import Foundation
 import UIKit
 
+typealias completion = (ResponseError?, [Card]?) -> ()
+
 protocol APIService {
     
-    func getCards(completionHandler: @escaping ([Card])->())
-    func getCardDetails(for cardId: Int, completionHandler: @escaping ([Card])->())
-    func getSearchResults(for searchTerm: String, completionHandler: @escaping ([Card])->())
+    
+    
+    func receiveCards(offset: Int, limit: Int, completionHandler: @escaping completion)
+    func receiveCardDetails(for cardId: Int, completionHandler: @escaping completion)
+    func receiveSearchResults(offset: Int, limit: Int, for searchTerm: String, completionHandler: @escaping completion)
     
 }
+

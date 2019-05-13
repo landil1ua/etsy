@@ -25,10 +25,7 @@ class AppSettingsServiceImpl {
 }
 
 extension AppSettingsServiceImpl : AppSettingsService {
-    
-    //Добавить Info.plist
-    //Изменить базовый урл
-    
+
     var baseEndpoint: String {
         return readValueFromPList(name: "etsyBaseEndpoint", fromPlist: "Info")
     }

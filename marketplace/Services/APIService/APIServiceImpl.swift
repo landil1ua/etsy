@@ -14,23 +14,18 @@ class APIServiceImpl {
     fileprivate var settingsService: AppSettingsService
     
     
-    let urlSession: URLSession
-    let urlBuilder: URLBuilder
-    let requestSender: RequestSender
-
+    fileprivate let urlSession: URLSession
+    
     fileprivate let builder: RequestBuilder
     fileprivate let executor: RequestExecutor
-
+    
     init(settingsService : AppSettingsService) {
         self.settingsService = settingsService
         urlSession = URLSession(configuration: .default)
-        urlBuilder = URLBuilder(settingsService: settingsService)
         
         builder = RequestBuilder.init(endpoint: settingsService.baseEndpoint,
                                       apiKey : settingsService.apiKey)
         executor = RequestExecutor()
-
-        requestSender = RequestSender()
     }
     
     
@@ -38,19 +33,29 @@ class APIServiceImpl {
 }
 
 extension APIServiceImpl: APIService {
-    func getCardDetails(for cardId: Int, completionHandler: @escaping ([Card]) -> ()) {
-        requestSender.sendRequest(url: urlBuilder.buildURLForCardDetails(for: cardId), completionHandler: completionHandler)
+    func receiveCards(offset: Int, limit: Int, completionHandler: @escaping completion) {
+        if let url = self.builder.listingList(offset: offset, limit: limit) {
+            self.executor.runRequest(request: url, completionHandler: completionHandler)
+        }
     }
     
-    func getSearchResults(for searchTerm: String, completionHandler: @escaping ([Card]) -> ()) {
-        requestSender.sendRequest(url: urlBuilder.buildSearchURL(for: searchTerm), completionHandler: completionHandler)
+    func receiveCardDetails(for cardId: Int, completionHandler: @escaping completion) {
+        if let url = self.builder.listingProductDetails(for: cardId) {
+            self.executor.runRequest(request: url, completionHandler: completionHandler)
+        }
+    }
+    
+    func receiveSearchResults(offset: Int, limit: Int, for searchTerm: String, completionHandler: @escaping completion) {
+        if let url = self.builder.searchResultsList(keywords: searchTerm, offset: offset, limit: limit) {
+            self.executor.runRequest(request: url, completionHandler: completionHandler)
+        }
     }
     
     
-    func getCards(completionHandler: @escaping ([Card]) -> ()) {
-        executor.runRequest(request: self.builder.listningList(offset: 0, limit: 50)!, completionHandler: completionHandler)
-//        requestSender.sendRequest(url: urlBuilder.buildURL(uri: .listings), completionHandler: completionHandler)
-    }
-
+    
+    
+    
+    
+    
 }
 

@@ -33,7 +33,7 @@ class CardsListViewController: UIViewController {
     
     @objc private func refreshCardsData( _ sender: Any) {
         
-        // TODO: Create another method for refresh in Presenter
+        output.refreshView()
     }
 }
 
@@ -47,8 +47,10 @@ extension CardsListViewController : CardsListViewInput {
         }
     }
     
-    func showError() {
-        
+    func showError(error: ResponseError) {
+        let errorAlert = UIAlertController(title: "Error", message: error.errorDescription!, preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(errorAlert, animated: true)
     }
     
     
@@ -86,7 +88,7 @@ fileprivate extension CardsListViewController {
     
     func setupRefreshControl() {
         //Make a custom UIRefreshControl. Make UIColor extension with all colors that we use in this application.
-
+        
         self.refreshControl = UIRefreshControl()
         self.cardsListCollectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshCardsData(_:)), for: .valueChanged)
@@ -142,7 +144,7 @@ extension CardsListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
         
-        output.getSearchResults(for: searchText)
+        output.obtainSearchResults(for: searchText)
     }
     
     

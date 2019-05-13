@@ -13,7 +13,7 @@ class RequestExecutor {
     fileprivate let queue: DispatchQueue
     fileprivate let session: URLSession
     fileprivate var sessionTask: URLSessionDataTask?
-
+    
     //MARK:
     init() {
         queue = DispatchQueue.global(qos: .utility)
@@ -21,26 +21,25 @@ class RequestExecutor {
     }
     
     //MARK:
-    func runRequest(request: URLRequest, completionHandler: @escaping(([Card])->())) {
+    func runRequest(request: URLRequest, completionHandler: @escaping(completion)) {
+        sessionTask?.cancel()
         
-        sessionTask = session.dataTask(with: request) { (data, response, error) in
+        sessionTask = session.dataTask(with: request) {
+            (data, response, error) in
             if let error = error {
-                print(error.localizedDescription)
-                return
-            } else
-                if let data = data {//, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                completionHandler(ResponseError(error: error), nil)
+            }
+            if let data = data {
                 do {
                     // Parse JSON response
                     let jsonResult = try JSONDecoder().decode(Response.self, from: data)
                     // reload data with completion
-                    completionHandler(jsonResult.results)
+                    completionHandler(nil, jsonResult.results)
                 } catch {
-                    print(error)
-                    return
+                    completionHandler(ResponseError(error: error), nil)
                 }
             }
-        }        
+        }
         sessionTask?.resume()
     }
-    
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 class CardsListPresenter: CardsListModuleInput {
-
+    
     
     weak var view: CardsListViewInput!
     var interactor: CardsListInteractorInput!
@@ -29,6 +29,10 @@ class CardsListPresenter: CardsListModuleInput {
 
 
 extension CardsListPresenter: CardsListViewOutput {
+    func refreshView() {
+        interactor.fetchCardsData()
+    }
+    
     var cardsList : [Card] {
         return _cardsList
     }
@@ -42,8 +46,7 @@ extension CardsListPresenter: CardsListViewOutput {
 
 extension CardsListPresenter: CardsListInteractorOutput {
     
-    //Don't use get/set in method names.
-    func getSearchResults(for searchString: String) {
+    func obtainSearchResults(for searchString: String) {
         interactor.fetchSearchResults(for: searchString)
     }
     
@@ -51,8 +54,8 @@ extension CardsListPresenter: CardsListInteractorOutput {
         _cardsList = data
     }
     
-    func cardsFetchFailed() {
-        view.showError()
+    func cardsFetchFailed(error: ResponseError) {
+        view.showError(error: error)
     }
     
 }
@@ -65,5 +68,5 @@ extension CardsListPresenter {
     func loadCards() {
         
     }
-
+    
 }

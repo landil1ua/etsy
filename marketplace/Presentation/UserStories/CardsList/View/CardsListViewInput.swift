@@ -7,16 +7,16 @@
 //
 
 protocol CardsListViewInput: class {
-
+    
     /**
-        @author landil
-        Setup initial state of the view
-    */
-
+     @author landil
+     Setup initial state of the view
+     */
+    
     func setupInitialState()
     
     func showCards(cards: [Card])
-    func showError()
+    func showError(error: ResponseError)
     
     func stopRefreshing()
 }
