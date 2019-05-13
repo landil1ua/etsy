@@ -29,6 +29,11 @@ class CardsListViewController: UIViewController {
         self.setupViewController()
         output.viewIsReady()
         
+        if let flowLayout = cardsListCollectionView.collectionViewLayout as? UICollectionViewFlowLayout, let collectionView = cardsListCollectionView {
+            let width = UIScreen.main.bounds.width
+            flowLayout.estimatedItemSize = CGSize(width: width, height: 200)
+        }
+        
     }
     
     @objc private func refreshCardsData( _ sender: Any) {
@@ -94,14 +99,14 @@ fileprivate extension CardsListViewController {
         refreshControl.addTarget(self, action: #selector(refreshCardsData(_:)), for: .valueChanged)
         
         // customizing refresh control
-        refreshControl.tintColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        refreshControl.tintColor = UIColor.greenColor
         refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data...")
     }
     
     func setupActivityIndicator() {
         //Make a custom UIActivityIndicatorView
         loadingDataActivityIndicator.hidesWhenStopped = true
-        loadingDataActivityIndicator.color = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        loadingDataActivityIndicator.color = UIColor.orangeColor
         loadingDataActivityIndicator.startAnimating()
     }
     
@@ -132,12 +137,12 @@ extension CardsListViewController: UICollectionViewDataSource {
 }
 
 
-// MARK: UICollectionViewDelegateFlowLayout
-extension CardsListViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CardViewCell.returnSize()
-    }
-}
+//// MARK: UICollectionViewDelegateFlowLayout
+//extension CardsListViewController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CardViewCell.returnSize()
+//    }
+//}
 
 
 extension CardsListViewController: UISearchBarDelegate {

@@ -13,23 +13,33 @@ class CardViewCell: UICollectionViewCell, CellInterface {
     //Change properties name
     @IBOutlet weak var cardTitleLabel: UILabel!        //cardTitleLabel
     @IBOutlet weak var cardPriceLabel: UILabel!        //cardPriceLabel
-
-    @IBOutlet weak var cardImage: UIImageView!    //cardImageView
-
+    
+    @IBOutlet weak var cardImageView: UIImageView!    //cardImageView
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        setNeedsLayout()
+        layoutIfNeeded()
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+        var frame = layoutAttributes.frame
+        frame.size.height = ceil(size.height)
+        layoutAttributes.frame = frame
+        return layoutAttributes
+    }
+    
     static func returnSize() -> CGSize {
         let width = UIScreen.main.bounds.width
-        let height : CGFloat = 100
+        let height : CGFloat = 230
         
         return CGSize(width: width, height: height)
     }
     
     func configure (with card : Card?) {
-        self.cardImage.image = nil
+        self.cardImageView.image = nil
         guard let card = card else {
             return
         }
@@ -37,7 +47,7 @@ class CardViewCell: UICollectionViewCell, CellInterface {
         
         //Change ImageViewExtension - make imageURL optional
         if let url = card.images?.mediumImage {
-            self.cardImage.loadImageFromURL(imageURL: url)
+            self.cardImageView.loadImageFromURL(imageURL: url)
         }
         guard let price = card.price else {
             self.cardPriceLabel.text = "No price"
