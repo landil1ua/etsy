@@ -13,23 +13,23 @@ class CardViewCell: UICollectionViewCell, CellInterface {
     //Change properties name
     @IBOutlet weak var cardTitleLabel: UILabel!        //cardTitleLabel
     @IBOutlet weak var cardPriceLabel: UILabel!        //cardPriceLabel
+    @IBOutlet weak var cardShopNameLabel: UILabel!
+    @IBOutlet weak var cardReviewCountLabel: UILabel!
     
     @IBOutlet weak var cardImageView: UIImageView!    //cardImageView
     
+    @IBOutlet weak var stack: UIStackView!
+    
+    @IBOutlet weak var firstStarImageView: UIImageView!
+    @IBOutlet weak var secondStarImageView: UIImageView!
+    @IBOutlet weak var thirdStarImageView: UIImageView!
+    @IBOutlet weak var fourthStarImageView: UIImageView!
+    @IBOutlet weak var fifthStarImageView: UIImageView!
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-    
-//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-//        setNeedsLayout()
-//        layoutIfNeeded()
-//        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-//        var frame = layoutAttributes.frame
-//            frame.size.height = ceil(size.height)
-//        layoutAttributes.frame = frame
-//        return layoutAttributes
-//    }
     
     static func returnSize() -> CGSize {
         let width = UIScreen.main.bounds.width
@@ -40,21 +40,62 @@ class CardViewCell: UICollectionViewCell, CellInterface {
     
     func configure (with card : Card?) {
         self.cardImageView.image = nil
-        guard let card = card else {
-            return
-        }
+        guard let card = card else { return }
+        
+        // Set cards title
         self.cardTitleLabel.text = card.title
         
-        //Change ImageViewExtension - make imageURL optional
+        // Set cards image
         if let url = card.images?.mediumImage {
             self.cardImageView.loadImageFromURL(imageURL: url)
         }
-        guard let price = card.price else {
-            self.cardPriceLabel.text = "No price"
-            return
+        
+        // Set cards shop
+        self.cardShopNameLabel.text = card.shopName
+        
+        // Set cards shop score
+        setRatingStars(ratingScore: card.score)
+        
+        // Set cars shop score count
+        if let reviewCount = card.reviewsCount {
+            self.cardReviewCountLabel.text = "(\(reviewCount))"
+        } 
+        
+        
+        // Set cards price currency
+        if let price = card.price?.toCurrency(forCurrencyCode: card.currency) {
+            self.cardPriceLabel.text = price
         }
-        self.cardPriceLabel.text = price.toCurrency(forCurrencyCode: card.currency)
     }
     
+    
+    func setRatingStars(ratingScore: Int?) {
+        
+        guard let ratingScore = ratingScore else { return }
+        switch ratingScore {
+        case 0..<20:
+            setStars(count: 1)
+        case 20..<40:
+            setStars(count: 2)
+        case 40..<60:
+            setStars(count: 3)
+        case 60..<80:
+            setStars(count: 4)
+        case 80...100:
+            setStars(count: 5)
+
+        default:
+            self.stack.isHidden = true
+        }
+    }
+    
+    fileprivate func setStars(count: Int?) {
+        guard let count = count else { return }
+        let arr = [firstStarImageView, secondStarImageView, thirdStarImageView, fourthStarImageView, fifthStarImageView]
+        for i in 0..<count {
+            arr[i]?.image = UIImage(named: "filledStar")
+        }
+        
+    }
 }
 

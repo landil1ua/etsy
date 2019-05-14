@@ -24,7 +24,7 @@ class RequestBuilder {
     func listingList (offset: Int, limit: Int) -> URLRequest? {
         let parameters = ["offset": offset,
                           "limit" : limit,
-                          "includes" : "MainImage"] as [String : Any]
+                          "includes" : "MainImage,User,Shop"] as [String : Any]
         
         return self.GETRequest(url: self.requestUrlWithParameters(path: "/listings/active", parameters: parameters))
     }
