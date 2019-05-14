@@ -21,15 +21,15 @@ class CardViewCell: UICollectionViewCell, CellInterface {
         // Initialization code
     }
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        setNeedsLayout()
-        layoutIfNeeded()
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var frame = layoutAttributes.frame
-        frame.size.height = ceil(size.height)
-        layoutAttributes.frame = frame
-        return layoutAttributes
-    }
+//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+//        setNeedsLayout()
+//        layoutIfNeeded()
+//        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+//        var frame = layoutAttributes.frame
+//            frame.size.height = ceil(size.height)
+//        layoutAttributes.frame = frame
+//        return layoutAttributes
+//    }
     
     static func returnSize() -> CGSize {
         let width = UIScreen.main.bounds.width

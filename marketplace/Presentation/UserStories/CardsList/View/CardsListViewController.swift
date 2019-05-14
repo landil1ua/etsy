@@ -33,10 +33,10 @@ class CardsListViewController: UIViewController {
         refreshControl = Refresher(presenter: self.output)
         refreshControl.setupRefreshControl(for: self.cardsListCollectionView)
         
-        if let flowLayout = cardsListCollectionView.collectionViewLayout as? UICollectionViewFlowLayout, let collectionView = cardsListCollectionView {
-            let w = collectionView.frame.width
-            flowLayout.estimatedItemSize = CGSize(width: w, height: 200)
-        }
+//        if let flowLayout = cardsListCollectionView.collectionViewLayout as? UICollectionViewFlowLayout, let collectionView = cardsListCollectionView {
+//            let w = collectionView.frame.width
+//            flowLayout.estimatedItemSize = CGSize(width: w, height: 200)
+//        }
         
     }
 }
@@ -125,6 +125,12 @@ extension CardsListViewController: UICollectionViewDataSource {
             return cell
         }
         return UICollectionViewCell()
+    }
+}
+
+extension CardsListViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CardViewCell.returnSize()
     }
 }
 
