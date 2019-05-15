@@ -69,6 +69,7 @@ extension CardsListPresenter: CardsListViewOutput {
     }
     
     func refreshView() {
+        _offset = 0 // need to infinity scrolling after reloading data
         if(requestType == .cards) {
             interactor.fetchCardsData(offset: _offset, limit: _limit)
         } else if (requestType == .search) {

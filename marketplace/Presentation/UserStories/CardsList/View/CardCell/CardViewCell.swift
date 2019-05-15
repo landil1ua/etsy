@@ -54,7 +54,7 @@ class CardViewCell: UICollectionViewCell, CellInterface {
         self.cardShopNameLabel.text = card.shopName
         
         // Set cards shop score
-        setRatingStars(ratingScore: card.score)
+        setRatingStars(ratingScore: card.score, reviewCount: card.reviewsCount)
         
         // Set cars shop score count
         if let reviewCount = card.reviewsCount {
@@ -69,9 +69,17 @@ class CardViewCell: UICollectionViewCell, CellInterface {
     }
     
     
-    func setRatingStars(ratingScore: Int?) {
+    func setRatingStars(ratingScore: Int?, reviewCount: Int?) {
+        
+        if(reviewCount == 0) {
+            setStars(count: 0)
+            return
+        }
         
         guard let ratingScore = ratingScore else { return }
+        
+        
+        
         switch ratingScore {
         case 1...20:
             setStars(count: 1)
@@ -91,6 +99,12 @@ class CardViewCell: UICollectionViewCell, CellInterface {
     fileprivate func setStars(count: Int?) {
         guard let count = count else { return }
         let arrayOfStars = [firstStarImageView, secondStarImageView, thirdStarImageView, fourthStarImageView, fifthStarImageView]
+        if count == 0 {
+            for i in 0..<5 {
+                arrayOfStars[i]?.image = UIImage(named: "emptyStar")
+            }
+        }
+        
         for i in 0..<count {
             arrayOfStars[i]?.image = UIImage(named: "filledStar")
         }

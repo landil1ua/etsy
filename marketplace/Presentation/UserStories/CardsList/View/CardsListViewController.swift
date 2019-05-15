@@ -20,6 +20,7 @@ class CardsListViewController: UIViewController {
     
     // MARK: Another variables
     private var refreshControl: Refresher!
+    private var footerView: CustomFooterActivityView!
     
     
     
@@ -33,10 +34,10 @@ class CardsListViewController: UIViewController {
         refreshControl = Refresher(presenter: self.output)
         refreshControl.setupRefreshControl(for: self.cardsListCollectionView)
         
-//        if let flowLayout = cardsListCollectionView.collectionViewLayout as? UICollectionViewFlowLayout, let collectionView = cardsListCollectionView {
-//            let w = collectionView.frame.width
-//            flowLayout.estimatedItemSize = CGSize(width: w, height: 200)
-//        }
+        //        if let flowLayout = cardsListCollectionView.collectionViewLayout as? UICollectionViewFlowLayout, let collectionView = cardsListCollectionView {
+        //            let w = collectionView.frame.width
+        //            flowLayout.estimatedItemSize = CGSize(width: w, height: 200)
+        //        }
         
     }
 }
@@ -82,26 +83,31 @@ fileprivate extension CardsListViewController {
     
     func setupViewController () {
         self.setupCollectionView()
-        //self.setupRefreshControl()
         self.setupActivityIndicator()
         self.setupSearchBar()
+        self.setupFooterLoaderActivityIndicator()
     }
     
     func setupCollectionView () {
         self.cardsListCollectionView.register(CardViewCell.cellNib, forCellWithReuseIdentifier: CardViewCell.id)
         self.cardsListCollectionView.prefetchDataSource = self
     }
-
+    
     
     func setupActivityIndicator() {
         //Make a custom UIActivityIndicatorView
         loadingDataActivityIndicator.hidesWhenStopped = true
-        loadingDataActivityIndicator.color = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        loadingDataActivityIndicator.color = UIColor.orangeColor
         loadingDataActivityIndicator.startAnimating()
     }
     
     func setupSearchBar() {
         searchField.delegate = self
+    }
+    
+    
+    func setupFooterLoaderActivityIndicator() {
+        self.cardsListCollectionView.register(UINib(nibName: "CustomFooterActivityView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "FooterLoaderActivityView")
     }
     
 }
@@ -124,11 +130,48 @@ extension CardsListViewController: UICollectionViewDataSource {
         }
         return UICollectionViewCell()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter {
+            if let footerView = cardsListCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FooterLoaderActivityView", for: indexPath) as? CustomFooterActivityView {
+                self.footerView = footerView
+                return footerView
+            }
+        }
+        return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            self.footerView.stopAnimate()
+        }
+    }
+    
 }
 
 extension CardsListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CardViewCell.returnSize()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        
+        return CGSize(width: collectionView.bounds.size.width, height: 100)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let threshold   = 50.0 ;
+        let contentOffset = scrollView.contentOffset.y; // offset from y = 0
+        let contentHeight = scrollView.contentSize.height; // height of all content in collectionView
+        let diffHeight = contentHeight - contentOffset;
+        let frameHeight = scrollView.bounds.size.height; // screen height
+        var triggerThreshold  = Float((diffHeight - frameHeight))/Float(threshold);
+        triggerThreshold   =  min(triggerThreshold, 0.0)
+        let pullRatio  = min(abs(triggerThreshold),1.0);
+        self.footerView?.setTransform(inTransform: CGAffineTransform.identity, scaleFactor: CGFloat(pullRatio))
+        if pullRatio >= 1 {
+            self.footerView?.animateFinal()
+        }
     }
 }
 
@@ -145,7 +188,8 @@ extension CardsListViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         let lastLoadedElementIndex = indexPaths[indexPaths.count - 1].row
         if(lastLoadedElementIndex == (output.offset)) {
-            print("load more")
+            print(lastLoadedElementIndex)
+            print(" load more\n\n")
             output.loadMoreCards()
         }
     }
