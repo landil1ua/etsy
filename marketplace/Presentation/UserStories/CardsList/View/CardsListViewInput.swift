@@ -18,5 +18,7 @@ protocol CardsListViewInput: class {
     func showCards(cards: [Card])
     func showError(error: ResponseError)
     
+    func scrollOnTop()
+    
     func stopRefreshing()
 }

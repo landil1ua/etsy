@@ -18,6 +18,8 @@
 		2C75762622801E0500C77AC9 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C75762522801E0500C77AC9 /* APIService.swift */; };
 		2C75762822801E1500C77AC9 /* APIServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C75762722801E1500C77AC9 /* APIServiceImpl.swift */; };
 		2C75762C22802F2C00C77AC9 /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C75762B22802F2C00C77AC9 /* CardModel.swift */; };
+		2C91CC10228C4EEC002F8BB9 /* CustomFooterActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C91CC0F228C4EEC002F8BB9 /* CustomFooterActivityView.swift */; };
+		2C91CC12228C4F51002F8BB9 /* CustomFooterActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C91CC11228C4F51002F8BB9 /* CustomFooterActivityView.xib */; };
 		2CABECE522815F2800CD0662 /* CardsList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CABECE422815F2800CD0662 /* CardsList.storyboard */; };
 		2CABECEF2281621F00CD0662 /* CardViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CABECED2281621F00CD0662 /* CardViewCell.swift */; };
 		2CABECF02281621F00CD0662 /* CardViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CABECEE2281621F00CD0662 /* CardViewCell.xib */; };
@@ -70,6 +72,8 @@
 		2C75762522801E0500C77AC9 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		2C75762722801E1500C77AC9 /* APIServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceImpl.swift; sourceTree = "<group>"; };
 		2C75762B22802F2C00C77AC9 /* CardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
+		2C91CC0F228C4EEC002F8BB9 /* CustomFooterActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFooterActivityView.swift; sourceTree = "<group>"; };
+		2C91CC11228C4F51002F8BB9 /* CustomFooterActivityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomFooterActivityView.xib; sourceTree = "<group>"; };
 		2CABECE422815F2800CD0662 /* CardsList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = CardsList.storyboard; path = marketplace/Presentation/UserStories/CardsList/CardsList.storyboard; sourceTree = SOURCE_ROOT; };
 		2CABECED2281621F00CD0662 /* CardViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewCell.swift; sourceTree = "<group>"; };
 		2CABECEE2281621F00CD0662 /* CardViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardViewCell.xib; sourceTree = "<group>"; };
@@ -167,6 +171,15 @@
 			path = CardModel;
 			sourceTree = "<group>";
 		};
+		2C91CC0E228C4ECC002F8BB9 /* CustomFooterActivityView */ = {
+			isa = PBXGroup;
+			children = (
+				2C91CC0F228C4EEC002F8BB9 /* CustomFooterActivityView.swift */,
+				2C91CC11228C4F51002F8BB9 /* CustomFooterActivityView.xib */,
+			);
+			path = CustomFooterActivityView;
+			sourceTree = "<group>";
+		};
 		2CABECE622815FBA00CD0662 /* CardCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,6 +268,7 @@
 		2CADD23E2278436A0049943F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2C91CC0E228C4ECC002F8BB9 /* CustomFooterActivityView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -506,6 +520,7 @@
 				2CF4C065227186F20092F177 /* LaunchScreen.storyboard in Resources */,
 				2CABECF02281621F00CD0662 /* CardViewCell.xib in Resources */,
 				2CF4C062227186F20092F177 /* Assets.xcassets in Resources */,
+				2C91CC12228C4F51002F8BB9 /* CustomFooterActivityView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,6 +558,7 @@
 				2C230C73228978FB004891E4 /* Refresher.swift in Sources */,
 				DB1B2E7222847BBC004A4858 /* Dictionary+PercentEscaped.swift in Sources */,
 				833A9C2DC47069F20C9A0CF0 /* CardsListViewController.swift in Sources */,
+				2C91CC10228C4EEC002F8BB9 /* CustomFooterActivityView.swift in Sources */,
 				63F4EEBA1A81312A23891209 /* CardsListModuleInput.swift in Sources */,
 				DB1B2E6A2284726B004A4858 /* ServicesAssemblyImpl.swift in Sources */,
 				55E50BD391CF53A470725587 /* CardsListPresenter.swift in Sources */,
