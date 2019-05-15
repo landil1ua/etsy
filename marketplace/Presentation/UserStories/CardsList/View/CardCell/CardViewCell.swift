@@ -18,7 +18,7 @@ class CardViewCell: UICollectionViewCell, CellInterface {
     
     @IBOutlet weak var cardImageView: UIImageView!    //cardImageView
     
-    @IBOutlet weak var stack: UIStackView!
+    @IBOutlet weak var starsRatingStackView: UIStackView!
     
     @IBOutlet weak var firstStarImageView: UIImageView!
     @IBOutlet weak var secondStarImageView: UIImageView!
@@ -73,27 +73,26 @@ class CardViewCell: UICollectionViewCell, CellInterface {
         
         guard let ratingScore = ratingScore else { return }
         switch ratingScore {
-        case 0..<20:
+        case 1...20:
             setStars(count: 1)
-        case 20..<40:
+        case 21...40:
             setStars(count: 2)
-        case 40..<60:
+        case 41...60:
             setStars(count: 3)
-        case 60..<80:
+        case 61...80:
             setStars(count: 4)
-        case 80...100:
+        case 81...100:
             setStars(count: 5)
-
         default:
-            self.stack.isHidden = true
+            return
         }
     }
     
     fileprivate func setStars(count: Int?) {
         guard let count = count else { return }
-        let arr = [firstStarImageView, secondStarImageView, thirdStarImageView, fourthStarImageView, fifthStarImageView]
+        let arrayOfStars = [firstStarImageView, secondStarImageView, thirdStarImageView, fourthStarImageView, fifthStarImageView]
         for i in 0..<count {
-            arr[i]?.image = UIImage(named: "filledStar")
+            arrayOfStars[i]?.image = UIImage(named: "filledStar")
         }
         
     }

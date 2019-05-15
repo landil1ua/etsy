@@ -27,16 +27,16 @@ class RequestExecutor {
         sessionTask = session.dataTask(with: request) {
             (data, response, error) in
             if let error = error {
-                completionHandler(ResponseError(error: error), nil)
+                completionHandler(ResponseError(error: error), nil, nil)
             }
             if let data = data {
                 do {
                     // Parse JSON response
                     let jsonResult = try JSONDecoder().decode(Response.self, from: data)
                     // reload data with completion
-                    completionHandler(nil, jsonResult.results)
+                    completionHandler(nil, jsonResult.count, jsonResult.results)
                 } catch {
-                    completionHandler(ResponseError(error: error), nil)
+                    completionHandler(ResponseError(error: error), nil, nil)
                 }
             }
         }

@@ -43,6 +43,14 @@ class CardsListViewController: UIViewController {
 
 // MARK: CardsListViewInput
 extension CardsListViewController : CardsListViewInput {
+    func scrollOnTop() {
+        OperationQueue.main.addOperation {
+            self.cardsListCollectionView?.scrollToItem(at: IndexPath(item: 0, section: 0),
+                                                       at: .top,
+                                                       animated: false)
+        }
+    }
+    
     func stopRefreshing() {
         refreshControl.stopRefreshing()
     }
@@ -81,19 +89,9 @@ fileprivate extension CardsListViewController {
     
     func setupCollectionView () {
         self.cardsListCollectionView.register(CardViewCell.cellNib, forCellWithReuseIdentifier: CardViewCell.id)
+        self.cardsListCollectionView.prefetchDataSource = self
     }
-    
-    //    func setupRefreshControl() {
-    //        //Make a custom UIRefreshControl. Make UIColor extension with all colors that we use in this application.
-    //
-    //        self.refreshControl = UIRefreshControl()
-    //        self.cardsListCollectionView.refreshControl = refreshControl
-    //        refreshControl.addTarget(self, action: #selector(refreshCardsData(_:)), for: .valueChanged)
-    //
-    //        // customizing refresh control
-    //        refreshControl.tintColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-    //        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data...")
-    //    }
+
     
     func setupActivityIndicator() {
         //Make a custom UIActivityIndicatorView
@@ -143,3 +141,12 @@ extension CardsListViewController: UISearchBarDelegate {
     }
 }
 
+extension CardsListViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let lastLoadedElementIndex = indexPaths[indexPaths.count - 1].row
+        if(lastLoadedElementIndex == (output.offset)) {
+            print("load more")
+            output.loadMoreCards()
+        }
+    }
+}

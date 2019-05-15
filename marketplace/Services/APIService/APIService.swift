@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-typealias completion = (ResponseError?, [Card]?) -> ()
+typealias completion = (ResponseError?, Int?, [Card]?) -> ()
 
 protocol APIService {
     

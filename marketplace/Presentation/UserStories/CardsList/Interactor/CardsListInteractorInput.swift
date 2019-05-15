@@ -9,6 +9,6 @@
 import Foundation
 
 protocol CardsListInteractorInput {
-    func fetchCardsData()
-    func fetchSearchResults(for searchString: String)
+    func fetchCardsData(offset: Int, limit: Int)
+    func fetchSearchResults(for searchString: String, offset: Int, limit: Int)
 }
